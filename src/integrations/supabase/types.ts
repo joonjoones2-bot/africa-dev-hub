@@ -14,16 +14,400 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      bookmarks: {
+        Row: {
+          created_at: string
+          employer_id: string
+          graduate_id: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          employer_id: string
+          graduate_id: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          employer_id?: string
+          graduate_id?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      employer_profiles: {
+        Row: {
+          company_name: string
+          company_website: string | null
+          created_at: string
+          id: string
+          industry: string | null
+          user_id: string
+        }
+        Insert: {
+          company_name: string
+          company_website?: string | null
+          created_at?: string
+          id?: string
+          industry?: string | null
+          user_id: string
+        }
+        Update: {
+          company_name?: string
+          company_website?: string | null
+          created_at?: string
+          id?: string
+          industry?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      feedback: {
+        Row: {
+          comment: string | null
+          created_at: string
+          graduate_id: string
+          id: string
+          mentor_id: string
+          project_id: string | null
+          rating: number | null
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          graduate_id: string
+          id?: string
+          mentor_id: string
+          project_id?: string | null
+          rating?: number | null
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          graduate_id?: string
+          id?: string
+          mentor_id?: string
+          project_id?: string | null
+          rating?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "feedback_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      graduate_profiles: {
+        Row: {
+          area_of_interest: string | null
+          created_at: string
+          education: string | null
+          id: string
+          programming_languages: string[] | null
+          skill_level: string | null
+          user_id: string
+        }
+        Insert: {
+          area_of_interest?: string | null
+          created_at?: string
+          education?: string | null
+          id?: string
+          programming_languages?: string[] | null
+          skill_level?: string | null
+          user_id: string
+        }
+        Update: {
+          area_of_interest?: string | null
+          created_at?: string
+          education?: string | null
+          id?: string
+          programming_languages?: string[] | null
+          skill_level?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      job_opportunities: {
+        Row: {
+          created_at: string
+          description: string | null
+          employer_id: string
+          id: string
+          location: string | null
+          required_skills: string[] | null
+          status: string | null
+          title: string
+          type: string | null
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          employer_id: string
+          id?: string
+          location?: string | null
+          required_skills?: string[] | null
+          status?: string | null
+          title: string
+          type?: string | null
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          employer_id?: string
+          id?: string
+          location?: string | null
+          required_skills?: string[] | null
+          status?: string | null
+          title?: string
+          type?: string | null
+        }
+        Relationships: []
+      }
+      mentor_profiles: {
+        Row: {
+          bio: string | null
+          created_at: string
+          id: string
+          specializations: string[] | null
+          user_id: string
+          years_of_experience: number | null
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string
+          id?: string
+          specializations?: string[] | null
+          user_id: string
+          years_of_experience?: number | null
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string
+          id?: string
+          specializations?: string[] | null
+          user_id?: string
+          years_of_experience?: number | null
+        }
+        Relationships: []
+      }
+      mentorship_requests: {
+        Row: {
+          created_at: string
+          graduate_id: string
+          id: string
+          mentor_id: string
+          status: string | null
+        }
+        Insert: {
+          created_at?: string
+          graduate_id: string
+          id?: string
+          mentor_id: string
+          status?: string | null
+        }
+        Update: {
+          created_at?: string
+          graduate_id?: string
+          id?: string
+          mentor_id?: string
+          status?: string | null
+        }
+        Relationships: []
+      }
+      messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          read: boolean | null
+          receiver_id: string
+          sender_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          read?: boolean | null
+          receiver_id: string
+          sender_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          read?: boolean | null
+          receiver_id?: string
+          sender_id?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          created_at: string
+          id: string
+          message: string | null
+          read: boolean | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message?: string | null
+          read?: boolean | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string | null
+          read?: boolean | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          country: string | null
+          created_at: string
+          full_name: string
+          github_url: string | null
+          id: string
+          linkedin_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          country?: string | null
+          created_at?: string
+          full_name: string
+          github_url?: string | null
+          id: string
+          linkedin_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          country?: string | null
+          created_at?: string
+          full_name?: string
+          github_url?: string | null
+          id?: string
+          linkedin_url?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      project_applications: {
+        Row: {
+          created_at: string
+          graduate_id: string
+          id: string
+          project_id: string
+          status: string | null
+        }
+        Insert: {
+          created_at?: string
+          graduate_id: string
+          id?: string
+          project_id: string
+          status?: string | null
+        }
+        Update: {
+          created_at?: string
+          graduate_id?: string
+          id?: string
+          project_id?: string
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_applications_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      projects: {
+        Row: {
+          created_at: string
+          created_by: string
+          description: string | null
+          difficulty: string | null
+          estimated_hours: number | null
+          id: string
+          required_skills: string[] | null
+          status: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          description?: string | null
+          difficulty?: string | null
+          estimated_hours?: number | null
+          id?: string
+          required_skills?: string[] | null
+          status?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          description?: string | null
+          difficulty?: string | null
+          estimated_hours?: number | null
+          id?: string
+          required_skills?: string[] | null
+          status?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "graduate" | "mentor" | "employer"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +534,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["graduate", "mentor", "employer"],
+    },
   },
 } as const
