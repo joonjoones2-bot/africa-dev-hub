@@ -45,6 +45,22 @@ export default function ProfilePage() {
         </CardContent>
       </Card>
 
+      {userRole === 'graduate' && user && (
+        <Card>
+          <CardContent className="flex items-center justify-between py-4">
+            <div>
+              <p className="font-semibold">Public Portfolio</p>
+              <p className="text-sm text-muted-foreground">Share your verified portfolio with employers.</p>
+            </div>
+            <Link to={`/portfolio/${user.id}`} target="_blank">
+              <Button size="sm" className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
+                <Globe className="mr-1 h-4 w-4" /> View Portfolio
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+      )}
+
       <Card>
         <CardHeader>
           <CardTitle>Profile Details</CardTitle>
