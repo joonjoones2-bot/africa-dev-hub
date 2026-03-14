@@ -1,10 +1,12 @@
 import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Github, Linkedin, MapPin, User } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { Github, Linkedin, MapPin, User, Globe } from 'lucide-react';
 
 export default function ProfilePage() {
-  const { profile, userRole } = useAuth();
+  const { profile, userRole, user } = useAuth();
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
@@ -42,6 +44,22 @@ export default function ProfilePage() {
           </div>
         </CardContent>
       </Card>
+
+      {userRole === 'graduate' && user && (
+        <Card>
+          <CardContent className="flex items-center justify-between py-4">
+            <div>
+              <p className="font-semibold">Public Portfolio</p>
+              <p className="text-sm text-muted-foreground">Share your verified portfolio with employers.</p>
+            </div>
+            <Link to={`/portfolio/${user.id}`} target="_blank">
+              <Button size="sm" className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
+                <Globe className="mr-1 h-4 w-4" /> View Portfolio
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+      )}
 
       <Card>
         <CardHeader>

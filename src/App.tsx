@@ -23,6 +23,9 @@ import StudentsPage from "./pages/dashboard/StudentsPage";
 import DiscoverPage from "./pages/dashboard/DiscoverPage";
 import PostJobPage from "./pages/dashboard/PostJobPage";
 import BookmarkedPage from "./pages/dashboard/BookmarkedPage";
+import SubmitProjectPage from "./pages/dashboard/SubmitProjectPage";
+import VerifyCompletionsPage from "./pages/dashboard/VerifyCompletionsPage";
+import PortfolioPage from "./pages/PortfolioPage";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +55,8 @@ function DashboardRoutes() {
           <Route path="discover" element={<DiscoverPage />} />
           <Route path="post-job" element={<PostJobPage />} />
           <Route path="bookmarked" element={<BookmarkedPage />} />
+          <Route path="submit-project" element={<SubmitProjectPage />} />
+          <Route path="verify-completions" element={<VerifyCompletionsPage />} />
         </Routes>
       </DashboardLayout>
     </ProtectedRoute>
@@ -69,6 +74,7 @@ const App = () => (
             <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/portfolio/:userId" element={<PortfolioPage />} />
             <Route path="/dashboard/*" element={<DashboardRoutes />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

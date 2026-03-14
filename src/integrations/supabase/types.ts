@@ -35,6 +35,48 @@ export type Database = {
         }
         Relationships: []
       }
+      earned_badges: {
+        Row: {
+          awarded_by: string | null
+          badge_id: string
+          created_at: string
+          graduate_id: string
+          id: string
+          project_completion_id: string | null
+        }
+        Insert: {
+          awarded_by?: string | null
+          badge_id: string
+          created_at?: string
+          graduate_id: string
+          id?: string
+          project_completion_id?: string | null
+        }
+        Update: {
+          awarded_by?: string | null
+          badge_id?: string
+          created_at?: string
+          graduate_id?: string
+          id?: string
+          project_completion_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "earned_badges_badge_id_fkey"
+            columns: ["badge_id"]
+            isOneToOne: false
+            referencedRelation: "skill_badges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "earned_badges_project_completion_id_fkey"
+            columns: ["project_completion_id"]
+            isOneToOne: false
+            referencedRelation: "project_completions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       employer_profiles: {
         Row: {
           company_name: string
@@ -336,6 +378,71 @@ export type Database = {
           },
         ]
       }
+      project_completions: {
+        Row: {
+          code_quality_score: number | null
+          communication_score: number | null
+          created_at: string
+          demo_url: string | null
+          graduate_id: string
+          id: string
+          mentor_comment: string | null
+          mentor_id: string | null
+          mentor_rating: number | null
+          problem_solving_score: number | null
+          project_id: string
+          status: string
+          submission_url: string | null
+          summary: string | null
+          updated_at: string
+          verified_at: string | null
+        }
+        Insert: {
+          code_quality_score?: number | null
+          communication_score?: number | null
+          created_at?: string
+          demo_url?: string | null
+          graduate_id: string
+          id?: string
+          mentor_comment?: string | null
+          mentor_id?: string | null
+          mentor_rating?: number | null
+          problem_solving_score?: number | null
+          project_id: string
+          status?: string
+          submission_url?: string | null
+          summary?: string | null
+          updated_at?: string
+          verified_at?: string | null
+        }
+        Update: {
+          code_quality_score?: number | null
+          communication_score?: number | null
+          created_at?: string
+          demo_url?: string | null
+          graduate_id?: string
+          id?: string
+          mentor_comment?: string | null
+          mentor_id?: string | null
+          mentor_rating?: number | null
+          problem_solving_score?: number | null
+          project_id?: string
+          status?: string
+          submission_url?: string | null
+          summary?: string | null
+          updated_at?: string
+          verified_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_completions_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       projects: {
         Row: {
           created_at: string
@@ -372,6 +479,36 @@ export type Database = {
           status?: string | null
           title?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      skill_badges: {
+        Row: {
+          category: string
+          created_at: string
+          description: string | null
+          difficulty: string
+          icon: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          difficulty?: string
+          icon?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          difficulty?: string
+          icon?: string | null
+          id?: string
+          name?: string
         }
         Relationships: []
       }
