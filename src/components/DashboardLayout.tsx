@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import {
   Code, LogOut, Menu, X, Home, User, Users, Briefcase, FolderOpen,
   MessageSquare, Bell, Star, GraduationCap, PlusCircle, Bookmark, Search,
+  Upload, ClipboardCheck, Globe,
 } from 'lucide-react';
 
 interface NavItem {
