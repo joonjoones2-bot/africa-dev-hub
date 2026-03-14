@@ -1,7 +1,9 @@
 import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Github, Linkedin, MapPin, User } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { Github, Linkedin, MapPin, User, Globe } from 'lucide-react';
 
 export default function ProfilePage() {
   const { profile, userRole } = useAuth();
