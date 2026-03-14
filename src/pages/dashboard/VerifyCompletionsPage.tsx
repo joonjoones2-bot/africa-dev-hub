@@ -40,10 +40,21 @@ export default function VerifyCompletionsPage() {
     const projectIds = projects.map(p => p.id);
     const { data } = await supabase
       .from('project_completions')
-      .select('*, project:projects(title, difficulty), graduate:profiles!project_completions_graduate_id_fkey(full_name)')
+      .select('*, project:projects(title, difficulty)')
       .in('project_id', projectIds)
       .eq('status', 'submitted')
       .order('created_at', { ascending: false });
+
+    // Fetch graduate names separately
+    const completionsData = (data as any) || [];
+    if (completionsData.length > 0) {
+      const gradIds = [...new Set(completionsData.map((c: any) => c.graduate_id))];
+      const { data: profiles } = await supabase.from('profiles').select('id, full_name').in('id', gradIds as string[]);
+      const profileMap = new Map((profiles || []).map((p: any) => [p.id, p.full_name]));
+      completionsData.forEach((c: any) => {
+        c.graduate = { full_name: profileMap.get(c.graduate_id) || 'Unknown' };
+      });
+    }
 
     setCompletions((data as any) || []);
     setLoading(false);
