@@ -23,6 +23,9 @@ import StudentsPage from "./pages/dashboard/StudentsPage";
 import DiscoverPage from "./pages/dashboard/DiscoverPage";
 import PostJobPage from "./pages/dashboard/PostJobPage";
 import BookmarkedPage from "./pages/dashboard/BookmarkedPage";
+import SubmitProjectPage from "./pages/dashboard/SubmitProjectPage";
+import VerifyCompletionsPage from "./pages/dashboard/VerifyCompletionsPage";
+import PortfolioPage from "./pages/PortfolioPage";
 
 const queryClient = new QueryClient();
 
