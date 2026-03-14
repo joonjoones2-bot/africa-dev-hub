@@ -55,6 +55,8 @@ function DashboardRoutes() {
           <Route path="discover" element={<DiscoverPage />} />
           <Route path="post-job" element={<PostJobPage />} />
           <Route path="bookmarked" element={<BookmarkedPage />} />
+          <Route path="submit-project" element={<SubmitProjectPage />} />
+          <Route path="verify-completions" element={<VerifyCompletionsPage />} />
         </Routes>
       </DashboardLayout>
     </ProtectedRoute>
