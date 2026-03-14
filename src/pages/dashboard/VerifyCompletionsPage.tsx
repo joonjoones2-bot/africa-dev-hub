@@ -56,7 +56,7 @@ export default function VerifyCompletionsPage() {
       });
     }
 
-    setCompletions((data as any) || []);
+    setCompletions(completionsData);
     setLoading(false);
   };
 
