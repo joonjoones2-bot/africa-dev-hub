@@ -55,65 +55,46 @@ export default function Signup() {
     e.preventDefault();
     setLoading(true);
 
-    const { data: authData, error: authError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: window.location.origin,
-        data: { full_name: name },
-      },
-    });
-
-    if (authError) {
-      toast({ title: 'Signup failed', description: authError.message, variant: 'destructive' });
-      setLoading(false);
-      return;
-    }
-
-    const userId = authData.user?.id;
-    if (!userId) {
-      setLoading(false);
-      return;
-    }
-
-    // Insert profile
-    await supabase.from('profiles').upsert({
-      id: userId,
+    // Build metadata — the database trigger will create all profile records
+    const metadata: Record<string, any> = {
       full_name: name,
       country,
       linkedin_url: linkedin || null,
       github_url: github || null,
-    });
+      role,
+    };
 
-    // Insert role
-    await supabase.from('user_roles').insert({ user_id: userId, role });
-
-    // Insert role-specific profile
     if (role === 'graduate') {
-      await supabase.from('graduate_profiles').insert({
-        user_id: userId,
-        area_of_interest: areaOfInterest,
-        programming_languages: languages.split(',').map((l) => l.trim()).filter(Boolean),
-        skill_level: skillLevel,
-      });
+      metadata.area_of_interest = areaOfInterest;
+      metadata.programming_languages = languages.split(',').map((l) => l.trim()).filter(Boolean);
+      metadata.skill_level = skillLevel;
     } else if (role === 'mentor') {
-      await supabase.from('mentor_profiles').insert({
-        user_id: userId,
-        years_of_experience: parseInt(yearsExp) || 0,
-        specializations: techSpecializations.split(',').map((t) => t.trim()).filter(Boolean),
-      });
+      metadata.years_of_experience = parseInt(yearsExp) || 0;
+      metadata.specializations = techSpecializations.split(',').map((t) => t.trim()).filter(Boolean);
     } else {
-      await supabase.from('employer_profiles').insert({
-        user_id: userId,
-        company_name: companyName,
-        industry,
-        company_website: companyWebsite || null,
-      });
+      metadata.company_name = companyName;
+      metadata.industry = industry;
+      metadata.company_website = companyWebsite || null;
     }
 
+    const { error: authError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: window.location.origin,
+        data: metadata,
+      },
+    });
+
     setLoading(false);
-    toast({ title: 'Account created!', description: 'Check your email to verify your account.' });
-    navigate('/dashboard');
+
+    if (authError) {
+      toast({ title: 'Signup failed', description: authError.message, variant: 'destructive' });
+      return;
+    }
+
+    toast({ title: 'Account created!', description: 'You can now log in.' });
+    navigate('/login');
   };
 
   return (
