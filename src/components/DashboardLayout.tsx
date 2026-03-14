@@ -31,6 +31,7 @@ const mentorNav: NavItem[] = [
   { label: 'My Profile', path: '/dashboard/profile', icon: User },
   { label: 'Requests', path: '/dashboard/requests', icon: GraduationCap },
   { label: 'Create Project', path: '/dashboard/create-project', icon: PlusCircle },
+  { label: 'Verify Work', path: '/dashboard/verify-completions', icon: ClipboardCheck },
   { label: 'My Students', path: '/dashboard/students', icon: Users },
   { label: 'Messages', path: '/dashboard/messages', icon: MessageSquare },
   { label: 'Notifications', path: '/dashboard/notifications', icon: Bell },

@@ -74,6 +74,7 @@ const App = () => (
             <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/portfolio/:userId" element={<PortfolioPage />} />
             <Route path="/dashboard/*" element={<DashboardRoutes />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
