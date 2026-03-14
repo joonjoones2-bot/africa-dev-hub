@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Github, Linkedin, MapPin, User, Globe } from 'lucide-react';
 
 export default function ProfilePage() {
-  const { profile, userRole } = useAuth();
+  const { profile, userRole, user } = useAuth();
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
