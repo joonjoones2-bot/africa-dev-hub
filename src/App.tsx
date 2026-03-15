@@ -58,6 +58,7 @@ function DashboardRoutes() {
           <Route path="bookmarked" element={<BookmarkedPage />} />
           <Route path="submit-project" element={<SubmitProjectPage />} />
           <Route path="verify-completions" element={<VerifyCompletionsPage />} />
+          <Route path="skills" element={<SkillProgressionPage />} />
         </Routes>
       </DashboardLayout>
     </ProtectedRoute>
