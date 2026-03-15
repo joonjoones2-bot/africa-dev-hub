@@ -25,6 +25,7 @@ import PostJobPage from "./pages/dashboard/PostJobPage";
 import BookmarkedPage from "./pages/dashboard/BookmarkedPage";
 import SubmitProjectPage from "./pages/dashboard/SubmitProjectPage";
 import VerifyCompletionsPage from "./pages/dashboard/VerifyCompletionsPage";
+import SkillProgressionPage from "./pages/dashboard/SkillProgressionPage";
 import PortfolioPage from "./pages/PortfolioPage";
 
 const queryClient = new QueryClient();
@@ -57,6 +58,7 @@ function DashboardRoutes() {
           <Route path="bookmarked" element={<BookmarkedPage />} />
           <Route path="submit-project" element={<SubmitProjectPage />} />
           <Route path="verify-completions" element={<VerifyCompletionsPage />} />
+          <Route path="skills" element={<SkillProgressionPage />} />
         </Routes>
       </DashboardLayout>
     </ProtectedRoute>

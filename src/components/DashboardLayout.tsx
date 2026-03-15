@@ -21,6 +21,7 @@ const graduateNav: NavItem[] = [
   { label: 'Projects', path: '/dashboard/projects', icon: FolderOpen },
   { label: 'My Projects', path: '/dashboard/my-projects', icon: Briefcase },
   { label: 'Submit Work', path: '/dashboard/submit-project', icon: Upload },
+  { label: 'Skill Progress', path: '/dashboard/skills', icon: GraduationCap },
   { label: 'Feedback', path: '/dashboard/feedback', icon: Star },
   { label: 'Messages', path: '/dashboard/messages', icon: MessageSquare },
   { label: 'Notifications', path: '/dashboard/notifications', icon: Bell },
