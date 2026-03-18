@@ -66,17 +66,36 @@ export default function DashboardHome() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {stats.map((stat) => (
-          <Card key={stat.label}>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">{stat.label}</CardTitle>
-              <stat.icon className={`h-5 w-5 ${stat.color}`} />
-            </CardHeader>
-            <CardContent>
-              <p className="text-3xl font-bold">{loading ? '—' : stat.value}</p>
-            </CardContent>
-          </Card>
-        ))}
+        {loading || stats.length === 0 ? (
+          [
+            { label: 'Loading...', icon: FolderOpen, color: 'text-secondary' },
+            { label: 'Loading...', icon: Users, color: 'text-accent' },
+            { label: 'Loading...', icon: Star, color: 'text-primary' },
+            { label: 'Loading...', icon: Briefcase, color: 'text-secondary' },
+          ].map((s, i) => (
+            <Card key={i}>
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium text-muted-foreground">{s.label}</CardTitle>
+                <s.icon className={`h-5 w-5 ${s.color}`} />
+              </CardHeader>
+              <CardContent>
+                <p className="text-3xl font-bold">—</p>
+              </CardContent>
+            </Card>
+          ))
+        ) : (
+          stats.map((stat) => (
+            <Card key={stat.label}>
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium text-muted-foreground">{stat.label}</CardTitle>
+                <stat.icon className={`h-5 w-5 ${stat.color}`} />
+              </CardHeader>
+              <CardContent>
+                <p className="text-3xl font-bold">{stat.value}</p>
+              </CardContent>
+            </Card>
+          ))
+        )}
       </div>
 
       <Card>
