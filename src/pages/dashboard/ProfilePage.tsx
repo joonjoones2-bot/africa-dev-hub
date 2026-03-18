@@ -8,9 +8,12 @@ import { Label } from '@/components/ui/label';
 import { Link } from 'react-router-dom';
 import { Github, Linkedin, MapPin, User, Globe, Pencil, Save, X } from 'lucide-react';
 import { toast } from 'sonner';
+import GraduateProfileEditor from '@/components/profile/GraduateProfileEditor';
+import MentorProfileEditor from '@/components/profile/MentorProfileEditor';
+import EmployerProfileEditor from '@/components/profile/EmployerProfileEditor';
 
 export default function ProfilePage() {
-  const { profile, userRole, user } = useAuth();
+  const { profile, userRole, user, refreshProfile } = useAuth();
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({
@@ -49,8 +52,7 @@ export default function ProfilePage() {
     } else {
       toast.success('Profile updated!');
       setEditing(false);
-      // Refresh profile data
-      window.location.reload();
+      await refreshProfile();
     }
   };
 
@@ -107,39 +109,19 @@ export default function ProfilePage() {
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="full_name">Full Name</Label>
-                <Input
-                  id="full_name"
-                  value={form.full_name}
-                  onChange={(e) => setForm({ ...form, full_name: e.target.value })}
-                  placeholder="Your full name"
-                />
+                <Input id="full_name" value={form.full_name} onChange={(e) => setForm({ ...form, full_name: e.target.value })} placeholder="Your full name" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="country">Country</Label>
-                <Input
-                  id="country"
-                  value={form.country}
-                  onChange={(e) => setForm({ ...form, country: e.target.value })}
-                  placeholder="e.g. South Africa"
-                />
+                <Input id="country" value={form.country} onChange={(e) => setForm({ ...form, country: e.target.value })} placeholder="e.g. South Africa" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="github_url">GitHub URL</Label>
-                <Input
-                  id="github_url"
-                  value={form.github_url}
-                  onChange={(e) => setForm({ ...form, github_url: e.target.value })}
-                  placeholder="https://github.com/username"
-                />
+                <Input id="github_url" value={form.github_url} onChange={(e) => setForm({ ...form, github_url: e.target.value })} placeholder="https://github.com/username" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="linkedin_url">LinkedIn URL</Label>
-                <Input
-                  id="linkedin_url"
-                  value={form.linkedin_url}
-                  onChange={(e) => setForm({ ...form, linkedin_url: e.target.value })}
-                  placeholder="https://linkedin.com/in/username"
-                />
+                <Input id="linkedin_url" value={form.linkedin_url} onChange={(e) => setForm({ ...form, linkedin_url: e.target.value })} placeholder="https://linkedin.com/in/username" />
               </div>
               <div className="flex gap-2">
                 <Button onClick={handleSave} disabled={saving || !form.full_name.trim()}>
@@ -153,6 +135,11 @@ export default function ProfilePage() {
           )}
         </CardContent>
       </Card>
+
+      {/* Role-specific profile editor */}
+      {userRole === 'graduate' && <GraduateProfileEditor />}
+      {userRole === 'mentor' && <MentorProfileEditor />}
+      {userRole === 'employer' && <EmployerProfileEditor />}
 
       {userRole === 'graduate' && user && (
         <Card>
