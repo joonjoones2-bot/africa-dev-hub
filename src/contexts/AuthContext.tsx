@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, useCallback, ReactNode } from 'react';
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -9,8 +9,10 @@ interface AuthContextType {
   user: User | null;
   userRole: UserRole | null;
   profile: any | null;
+  roleProfile: any | null;
   loading: boolean;
   signOut: () => Promise<void>;
+  refreshProfile: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -18,8 +20,10 @@ const AuthContext = createContext<AuthContextType>({
   user: null,
   userRole: null,
   profile: null,
+  roleProfile: null,
   loading: true,
   signOut: async () => {},
+  refreshProfile: async () => {},
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -29,29 +33,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [userRole, setUserRole] = useState<UserRole | null>(null);
   const [profile, setProfile] = useState<any | null>(null);
+  const [roleProfile, setRoleProfile] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchProfile = async (userId: string) => {
+  const fetchProfile = useCallback(async (userId: string) => {
     const { data: roleData } = await supabase
       .from('user_roles')
       .select('role')
       .eq('user_id', userId)
       .single();
-    
-    if (roleData) {
-      setUserRole(roleData.role as UserRole);
-    }
+
+    const role = roleData?.role as UserRole | undefined;
+    if (role) setUserRole(role);
 
     const { data: profileData } = await supabase
       .from('profiles')
       .select('*')
       .eq('id', userId)
       .single();
-    
-    if (profileData) {
-      setProfile(profileData);
+
+    if (profileData) setProfile(profileData);
+
+    // Fetch role-specific profile
+    if (role === 'graduate') {
+      const { data } = await supabase.from('graduate_profiles').select('*').eq('user_id', userId).single();
+      setRoleProfile(data);
+    } else if (role === 'mentor') {
+      const { data } = await supabase.from('mentor_profiles').select('*').eq('user_id', userId).single();
+      setRoleProfile(data);
+    } else if (role === 'employer') {
+      const { data } = await supabase.from('employer_profiles').select('*').eq('user_id', userId).single();
+      setRoleProfile(data);
     }
-  };
+  }, []);
+
+  const refreshProfile = useCallback(async () => {
+    if (user) await fetchProfile(user.id);
+  }, [user, fetchProfile]);
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
@@ -64,6 +82,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         } else {
           setUserRole(null);
           setProfile(null);
+          setRoleProfile(null);
         }
         setLoading(false);
       }
@@ -79,7 +98,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [fetchProfile]);
 
   const signOut = async () => {
     await supabase.auth.signOut();
@@ -87,10 +106,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
     setUserRole(null);
     setProfile(null);
+    setRoleProfile(null);
   };
 
   return (
-    <AuthContext.Provider value={{ session, user, userRole, profile, loading, signOut }}>
+    <AuthContext.Provider value={{ session, user, userRole, profile, roleProfile, loading, signOut, refreshProfile }}>
       {children}
     </AuthContext.Provider>
   );
