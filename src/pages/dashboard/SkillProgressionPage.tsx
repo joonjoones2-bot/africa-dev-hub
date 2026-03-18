@@ -97,7 +97,7 @@ export default function SkillProgressionPage() {
 
   if (loading) return <div className="flex justify-center py-12"><Loader2 className="h-8 w-8 animate-spin text-muted-foreground" /></div>;
 
-  const level = totalCompleted >= 10 ? 'Advanced' : totalCompleted >= 5 ? 'Intermediate' : totalCompleted >= 1 ? 'Beginner' : 'Newcomer';
+  const level = totalCompleted >= 20 ? 'Advanced' : totalCompleted >= 10 ? 'Intermediate' : totalCompleted >= 1 ? 'Beginner' : 'Newcomer';
   const levelColor = level === 'Advanced' ? 'text-destructive' : level === 'Intermediate' ? 'text-secondary' : level === 'Beginner' ? 'text-accent' : 'text-muted-foreground';
 
   return (
